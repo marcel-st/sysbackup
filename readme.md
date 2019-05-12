@@ -3,4 +3,23 @@
 This is a system backup solution for CentOS/RHEL.
 Based on tar and a mounted filesystem (network or local disk)
 
-This script is not ready yet, it's a work in progress
+## Installation
+
+ 1. Download sysbackup and sysbackup.conf too any location you like (just keep the files together!)
+ 2. mount the filesystem where you want to put the backups
+ 3. edit sysbackup.config to your liking
+ 4. schedule sysbackup to run every 24 hours
+
+## Usage
+
+usage ./sysbackup.sh <command> <date> <string or wildcard>
+
+commands with required parameters
+  backup                                - Create a new backup
+  restore <date> <string or wildcard    - Restore data from backup
+  search <string or wildcard>           - Search for data in backup
+  list                                  - List available safesets
+
+options
+  <date> in format <day-month-year_hour+minutes> : example 31-12-19_2355
+  <string or wildcard> example : home/kenneth/.ssh/id_rsa.pub
