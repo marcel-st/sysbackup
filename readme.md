@@ -5,11 +5,11 @@ Based on tar and a mounted filesystem (network or local disk)
 
 ## Installation
 
- 1. Download sysbackup and sysbackup.conf too any location you like (just keep the files together!)
- 2. mount the filesystem where you want to put the backups
- 3. edit sysbackup.config to your liking
- 4. run "sysbackup prep" to setup the required folders
- 4. schedule sysbackup to run every 24 hours
+* Download sysbackup and sysbackup.conf too any location you like (just keep the files together!)
+* mount the filesystem where you want to put the backups
+* edit sysbackup.config to your liking
+* run "sysbackup prep" to setup the required folders
+* schedule sysbackup to run every 24 hours
 
 ## Usage
 
