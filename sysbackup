@@ -41,7 +41,7 @@ function doBackup()
       exit 1
     fi
   fi
-  if [ ! -d "$INCREMENT_DB/$NAME" ];
+  if [ ! -d "$INCREMENT_DB" ];
   then
     echo -n "The incremental database path does not exist, should i create it? (Y/n) : "
     read -r ANSWER
