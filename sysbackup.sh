@@ -46,10 +46,11 @@ function doBackup()
       echo "Cannot continue..."
       exit 1
     fi
+  fi
   tar -czf $ARC/sysbackup.$HOSTNAME.$TIME.tgz --listed-incremental=$INC $BACKUP
   find $INCREMENTS -mtime +$RETENTION -type f -name sysbackup.inc -exec rm {} \;
   SPARE=$((INC+INC))
-  find $ARC -mtime +$SPARE -type f -name sysbackup.$HOSTNAME.*.tgz -exec rm -v {} \;
+  find $ARC -mtime +$SPARE -type f -name "sysbackup.$HOSTNAME.*.tgz" -exec rm -v {} \;
 }
 
 function doRestore()
