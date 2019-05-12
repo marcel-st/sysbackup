@@ -45,7 +45,6 @@ function doBackup()
     echo "Cannot continue..."
     exit 1
   fi
-  fi
   if [ ! -d "$INCREMENT_DB" ];
   then
     echo "The incremental database path does not exist, did you run $0 prep? "
