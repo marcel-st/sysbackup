@@ -53,10 +53,14 @@ function doBackup()
       exit 1
     fi
   fi
-  tar -czf $ARC/sysbackup.$NAME.$TIME.tgz --listed-incremental=$INC $BACKUP
+  echo "Creating backup $TIME"
+  tar -czvf $ARC/sysbackup.$NAME.$TIME.tgz --listed-incremental=$INC $BACKUP
+  echo
+  echo "Cleaning expired data"
   find "$INCREMENT_DB" -mtime +$RETENTION -type f -name "$NAME.db" -exec rm {} \;
   SPARE=$((RETENTION+RETENTION))
   find "$ARC" -mtime +$SPARE -type f -name "sysbackup.$NAME.*.tgz" -exec rm -v {} \;
+  echo
 }
 
 function doRestore()
