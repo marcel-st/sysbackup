@@ -18,8 +18,8 @@ usage ./sysbackup.sh <command> <date> <string or wildcard>
 commands with required parameters
 * prep                                  - Create the required folder structure for your system
 * backup                                - Create a new backup
-* restore <date> <string or wildcard>   - Restore data from backup
-* search <string or wildcard>           - Search for data in backup
+* restore date string or wildcard   - Restore data from backup
+* search string or wildcard          - Search for data in backup
 * list                                  - List available safesets
 
 options
