@@ -13,7 +13,7 @@ Based on tar and a mounted filesystem (network or local disk)
 
 ## Usage
 
-usage ./sysbackup.sh <command> <date> <string or wildcard>
+usage ./sysbackup [command] [date] [string or wildcard]
 
 commands with required parameters
 * prep                                  - Create the required folder structure for your system
