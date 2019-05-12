@@ -23,5 +23,5 @@ commands with required parameters
 * list                                  - List available safesets
 
 options
-* <date> in format <day-month-year_hour+minutes> : example 31-12-19_2355
-* <string or wildcard> example : home/kenneth/.ssh/id_rsa.pub
+* [date] in format <day-month-year_hour+minutes> : example 31-12-19_2355
+* [string or wildcard] example : home/kenneth/.ssh/id_rsa.pub
