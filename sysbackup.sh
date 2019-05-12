@@ -111,12 +111,7 @@ else
       fi
     ;;
     list)
-      if [ -z "$2" ];
-      then
-        showUsage
-      else
-        showList "$2"
-      fi
+      showList "$2"
     ;;
     *)
       showUsage
