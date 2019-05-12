@@ -61,7 +61,7 @@ function doBackup()
   fi
   tar -czf "$ARC"/sysbackup."$HOSTNAME"."$TIME".tgz --listed-incremental="$INC" "$BACKUP"
   find "$INCREMENT_DB/$HOSTNAME" -mtime +$RETENTION -type f -name "sysbackup.inc" -exec rm {} \;
-  SPARE=$((INC+INC))
+  SPARE=$((RETENTION+RETENTION))
   find "$ARC" -mtime +$SPARE -type f -name "sysbackup.$HOSTNAME.*.tgz" -exec rm -v {} \;
 }
 
