@@ -1,4 +1,4 @@
-# System backup script
+# Linux Sysbackup Backup Solution
 
 This is a system backup solution for CentOS/RHEL.
 Based on tar and a mounted filesystem (network or local disk)
