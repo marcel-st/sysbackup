@@ -13,8 +13,9 @@ INCREMENT_DB=/mnt/database
 #
 
 TIME=$(date +%d-%m-%y_%H%M)
-INC=$INCREMENT_DB/$HOSTNAME/sysbackup.inc
-ARC=$ARCHIVE_PATH/$HOSTNAME
+INC=$INCREMENT_DB/$NAME/sysbackup.inc
+ARC=$ARCHIVE_PATH/$NAME
+NAME=$(hostname -s)
 
 function showUsage()
 {
@@ -47,27 +48,27 @@ function doBackup()
       exit 1
     fi
   fi
-  if [ ! -d "$INCREMENT_DB/$HOSTNAME" ];
+  if [ ! -d "$INCREMENT_DB/$NAME" ];
   then
     echo -n "The incremental database path does not exist, should i create it? (Y/n) : "
     read -r ANSWER
     if [[ $ANSWER == "Y" || $ANSWER == "y" ]];
     then
-      mkdir -p "$INCREMENT_DB/$HOSTNAME"
+      mkdir -p "$INCREMENT_DB/$NAME"
     else
       echo "Cannot continue..."
       exit 1
     fi
   fi
-  tar -czf "$ARC"/sysbackup."$HOSTNAME"."$TIME".tgz --listed-incremental="$INC" "$BACKUP"
-  find "$INCREMENT_DB/$HOSTNAME" -mtime +$RETENTION -type f -name "sysbackup.inc" -exec rm {} \;
+  tar -czf "$ARC"/sysbackup."$NAME"."$TIME".tgz --listed-incremental="$INC" "$BACKUP"
+  find "$INCREMENT_DB/$NAME" -mtime +$RETENTION -type f -name "sysbackup.inc" -exec rm {} \;
   SPARE=$((RETENTION+RETENTION))
-  find "$ARC" -mtime +$SPARE -type f -name "sysbackup.$HOSTNAME.*.tgz" -exec rm -v {} \;
+  find "$ARC" -mtime +$SPARE -type f -name "sysbackup.$NAME.*.tgz" -exec rm -v {} \;
 }
 
 function doRestore()
 {
-  find "$ARC" -type f -name sysbackup."$HOSTNAME"."$1".tgz -exec tar -zxvf {} "$2" \;
+  find "$ARC" -type f -name sysbackup."$NAME"."$1".tgz -exec tar -zxvf {} "$2" \;
 }
 
 function doSearch()
