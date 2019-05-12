@@ -6,14 +6,14 @@
 BACKUP="/home /root /container"
 RETENTION=7
 ARCHIVE_PATH=/mnt
-INCREMENTS=/mnt/$HOSTNAME/increments
+INCREMENT_DB=/mnt/$HOSTNAME/increments
 
 # Runcode, don't change anything underneath
 # unless if you know what you are doing
 #
 
 TIME=$(date +%d-%m-%y_%H%M)
-INC=$INCREMENTS/$HOSTNAME/sysbackup.inc
+INC=$INCREMENT_DB/$HOSTNAME/sysbackup.inc
 ARC=$ARCHIVE_PATH/$HOSTNAME
 
 function showUsage()
@@ -47,8 +47,20 @@ function doBackup()
       exit 1
     fi
   fi
+  if [ ! -d "$ARC" ];
+  then
+    echo -n "The incremental database path does not exist, should i create it? (Y/n) : "
+    read -r ANSWER
+    if [[ $ANSWER == "Y" || $ANSWER == "y" ]];
+    then
+      mkdir -p "$INCREMENT_DB/$HOSTNAME"
+    else
+      echo "Cannot continue..."
+      exit 1
+    fi
+  fi
   tar -czf "$ARC"/sysbackup."$HOSTNAME"."$TIME".tgz --listed-incremental="$INC" "$BACKUP"
-  find "$INCREMENTS" -mtime +$RETENTION -type f -name sysbackup.inc -exec rm {} \;
+  find "$INCREMENT_DB/$HOSTNAME" -mtime +$RETENTION -type f -name "sysbackup.inc" -exec rm {} \;
   SPARE=$((INC+INC))
   find "$ARC" -mtime +$SPARE -type f -name "sysbackup.$HOSTNAME.*.tgz" -exec rm -v {} \;
 }
