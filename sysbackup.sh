@@ -6,7 +6,7 @@
 BACKUP="/home /root /container"
 RETENTION=7
 ARCHIVE_PATH=/mnt
-INCREMENT_DB=/mnt/$HOSTNAME/increments
+INCREMENT_DB=/mnt/database
 
 # Runcode, don't change anything underneath
 # unless if you know what you are doing
@@ -47,7 +47,7 @@ function doBackup()
       exit 1
     fi
   fi
-  if [ ! -d "$ARC" ];
+  if [ ! -d "$INCREMENT_DB/$HOSTNAME" ];
   then
     echo -n "The incremental database path does not exist, should i create it? (Y/n) : "
     read -r ANSWER
