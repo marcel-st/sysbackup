@@ -15,6 +15,7 @@ function showUsage()
   echo "usage $0 <command> <date> <string or wildcard>"
   echo
   echo "commands with required parameters" 
+  echo "  prep                                  - Prepare your backup location"
   echo "  backup                                - Create a new backup"
   echo "  restore <date> <string or wildcard    - Restore data from backup"
   echo "  search <string or wildcard>             - Search for data in backup"
@@ -27,30 +28,29 @@ function showUsage()
   exit 0
 }
 
+function doPrep()
+{
+  echo "Creating archive path $ARC"
+  mkdir -p "$ARC"
+  echo "Creating database path $INCREMENT_DB"
+  mkdir -p "$INCREMENT_DB"
+  echo "Prep completed"
+}
+
 function doBackup()
 {
   if [ ! -d "$ARC" ];
   then
-    echo -n "The archive path does not exist, should i create it? (Y/n) : "
-    read -r ANSWER
-    if [[ $ANSWER == "Y" || $ANSWER == "y" ]];
-    then
-      mkdir -p "$ARC"
-    else
-      echo "Cannot continue..."
-      exit 1
-    fi
+    echo "The archive path does not exist, did you run $0 prep? "
+    echo "Cannot continue..."
+    exit 1
+  fi
   fi
   if [ ! -d "$INCREMENT_DB" ];
   then
-    echo -n "The incremental database path does not exist, should i create it? (Y/n) : "
-    read -r ANSWER
-    if [[ $ANSWER == "Y" || $ANSWER == "y" ]];
-    then
-      mkdir -p "$INCREMENT_DB/$NAME"
-    else
-      echo "Cannot continue..."
-      exit 1
+    echo "The incremental database path does not exist, did you run $0 prep? "
+    echo "Cannot continue..."
+    exit 1
     fi
   fi
   echo "Creating backup $TIME"
@@ -88,6 +88,9 @@ then
   showUsage
 else
   case "$1" in
+    prep)
+      doPrep
+    ;;
     backup)
       doBackup
     ;;
