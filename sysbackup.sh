@@ -103,11 +103,11 @@ else
       fi
     ;;
     find)
-      if [[ -z "$2" && "$3" ]];
+      if [ -z "$2" ];
       then
         showUsage
       else
-        doSearch "$2" "$3"
+        doSearch "$2"
       fi
     ;;
     list)
