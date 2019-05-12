@@ -3,7 +3,7 @@
 This is a system backup solution for CentOS/RHEL.
 Based on tar and a mounted filesystem (network or local disk)
 
-It's probably not the most elegant method, but it works good
+It's probably not the most elegant method, but it works quite good
 
 ## Installation
 
