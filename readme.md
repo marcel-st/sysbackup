@@ -7,7 +7,7 @@ It's probably not the most elegant method, but it works quite good
 
 ## Installation
 
-* Download sysbackup and sysbackup.conf too any location you like (just keep the files together!)
+* Download sysbackup and sysbackup.conf to any location you like (just keep the files together!)
 * mount the filesystem where you want to put the backups
 * edit sysbackup.config to your liking
 * run "sysbackup prep" to setup the required folders
