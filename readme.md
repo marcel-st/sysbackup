@@ -8,6 +8,7 @@ Based on tar and a mounted filesystem (network or local disk)
  1. Download sysbackup and sysbackup.conf too any location you like (just keep the files together!)
  2. mount the filesystem where you want to put the backups
  3. edit sysbackup.config to your liking
+ 4. run "sysbackup prep" to setup the required folders
  4. schedule sysbackup to run every 24 hours
 
 ## Usage
@@ -15,6 +16,7 @@ Based on tar and a mounted filesystem (network or local disk)
 usage ./sysbackup.sh <command> <date> <string or wildcard>
 
 commands with required parameters
+  prep                                  - Create the required folder structure for your system
   backup                                - Create a new backup
   restore <date> <string or wildcard    - Restore data from backup
   search <string or wildcard>           - Search for data in backup
