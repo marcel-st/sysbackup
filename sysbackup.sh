@@ -12,7 +12,7 @@ INCREMENTS=/mnt/$HOSTNAME/increments
 # unless if you know what you are doing
 #
 
-TIME=`date +%d-%m-%y_%H%M`
+TIME=$(date +%d-%m-%y_%H%M)
 INC=$INCREMENTS/$HOSTNAME/sysbackup.inc
 ARC=$ARCHIVE_PATH/$HOSTNAME
 
@@ -32,38 +32,38 @@ function showUsage()
   echo
   exit 0
 }
-  
+
 function doBackup()
 {
-  if [! -d $ARC ];
+  if [ ! -d "$ARC" ];
   then
     echo -n "The archive path does not exist, should i create it? (Y/n) : "
-    read $ANSWER
+    read -r ANSWER
     if [[ $ANSWER == "Y" || $ANSWER == "y" ]];
     then
-      mkdir -p $ARC
+      mkdir -p "$ARC"
     else
       echo "Cannot continue..."
       exit 1
     fi
   fi
-  tar -czf $ARC/sysbackup.$HOSTNAME.$TIME.tgz --listed-incremental=$INC $BACKUP
-  find $INCREMENTS -mtime +$RETENTION -type f -name sysbackup.inc -exec rm {} \;
+  tar -czf "$ARC"/sysbackup."$HOSTNAME"."$TIME".tgz --listed-incremental="$INC" "$BACKUP"
+  find "$INCREMENTS" -mtime +$RETENTION -type f -name sysbackup.inc -exec rm {} \;
   SPARE=$((INC+INC))
-  find $ARC -mtime +$SPARE -type f -name "sysbackup.$HOSTNAME.*.tgz" -exec rm -v {} \;
+  find "$ARC" -mtime +$SPARE -type f -name "sysbackup.$HOSTNAME.*.tgz" -exec rm -v {} \;
 }
 
 function doRestore()
 {
-  find $ARC -type f -name sysbackup.$HOSTNAME.$1.tgz -exec tar -zxvf {} $1 \;
+  find "$ARC" -type f -name sysbackup."$HOSTNAME"."$1".tgz -exec tar -zxvf {} "$2" \;
 }
 
 function doSearch()
 {
-  for N in `ls -l $ARC | grep ^- | awk '{print $9}'`
-  do 
-    echo $N
-    tar -ztvf $N | grep $1
+  for N in $(ls -l "$ARC" | grep ^- | awk '{print $9}')
+  do
+    echo "$N"
+    tar -ztvf "$N" | grep "$1"
     read -n 1 -r -s -p "Press any key to continue..."
   done
 }
@@ -73,36 +73,36 @@ function showList()
   ls -l $ARC | grep ^- | awk '{print $9}'
 }
 
-if [ -z $1 ];
+if [ -z "$1" ];
 then
-  showUsage()
+  showUsage
 else
-  case $1 in 
+  case "$1" in
     backup)
       doBackup
     ;;
     restore)
-      if [[ -z $2 && $3 ]];
+      if [[ -z "$2" && "$3" ]];
       then
         showUsage
       else
-        doRestore $2 $3
+        doRestore "$2" "$3"
       fi
     ;;
     find)
-      if [[ -z $2 && $3 ]];
+      if [[ -z "$2" && "$3" ]];
       then
         showUsage
       else
-        doSearch $2 $3
+        doSearch "$2" "$3"
       fi
     ;;
     list)
-      if [ -z $2 ];
+      if [ -z "$2" ];
       then
         showUsage
       else
-        showList $2
+        showList "$2"
       fi
     ;;
     *)
@@ -110,5 +110,3 @@ else
     ;;
   esac
 fi
-  
-
