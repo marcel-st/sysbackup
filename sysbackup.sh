@@ -24,7 +24,7 @@ function showUsage()
   echo "commands with required parameters" 
   echo "  backup                                - Create a new backup"
   echo "  restore <date> <string or wildcard    - Restore data from backup"
-  echo "  find <string or wildcard>             - Search for data in backup"
+  echo "  search <string or wildcard>             - Search for data in backup"
   echo "  list                                  - List available safesets"
   echo
   echo "options"
@@ -76,7 +76,7 @@ function doSearch()
   for N in $(ls -l "$ARC" | grep ^- | awk '{print $9}')
   do
     echo "$N"
-    tar -ztvf "$N" | grep "$1"
+    tar -ztvf "$ARC/$N" | grep "$1"
     read -n 1 -r -s -p "Press any key to continue..."
   done
 }
@@ -102,7 +102,7 @@ else
         doRestore "$2" "$3"
       fi
     ;;
-    find)
+    search)
       if [ -z "$2" ];
       then
         showUsage
