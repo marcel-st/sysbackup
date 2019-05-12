@@ -12,10 +12,10 @@ INCREMENT_DB=/mnt/database
 # unless if you know what you are doing
 #
 
-TIME=$(date +%d-%m-%y_%H%M)
-INC=$INCREMENT_DB/$NAME/sysbackup.inc
-ARC=$ARCHIVE_PATH/$NAME
 NAME=$(hostname -s)
+TIME=$(date +%d-%m-%y_%H%M)
+INC=$INCREMENT_DB/$NAME.db
+ARC=$ARCHIVE_PATH/$NAME
 
 function showUsage()
 {
@@ -60,8 +60,8 @@ function doBackup()
       exit 1
     fi
   fi
-  tar -czf "$ARC"/sysbackup."$NAME"."$TIME".tgz --listed-incremental="$INC" "$BACKUP"
-  find "$INCREMENT_DB/$NAME" -mtime +$RETENTION -type f -name "sysbackup.inc" -exec rm {} \;
+  tar -czf $ARC/sysbackup.$NAME.$TIME.tgz --listed-incremental=$INC $BACKUP
+  find "$INCREMENT_DB" -mtime +$RETENTION -type f -name "$NAME.db" -exec rm {} \;
   SPARE=$((RETENTION+RETENTION))
   find "$ARC" -mtime +$SPARE -type f -name "sysbackup.$NAME.*.tgz" -exec rm -v {} \;
 }
