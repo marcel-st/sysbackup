@@ -50,7 +50,6 @@ function doBackup()
     echo "The incremental database path does not exist, did you run $0 prep? "
     echo "Cannot continue..."
     exit 1
-    fi
   fi
   echo "Creating backup $TIME"
   tar -czvf $ARC/sysbackup.$NAME.$TIME.tgz --listed-incremental=$INC $BACKUP
